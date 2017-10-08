@@ -1,0 +1,22 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+IP_RANGE=$(termux-dialog -i "ip range" -t "nmap scan")
+REPORT_NAME="${IP_RANGE}_`date +%m%d%y`.html"
+
+if [ "$IP_RANGE" = "" ]; then
+	termux-toast "scan canceled"
+	exit
+fi
+
+NMAP_PARAMS=$(termux-dialog -i "nmap params" -t "nmap scan")
+
+termux-toast "starting scan for ${IP_RANGE}"
+
+sudo nmap $NMAP_PARAMS $IP_RANGE -oX scan.xml
+sudo xsltproc scan.xml -o "/storage/emulated/0/Reports/${REPORT_NAME}"
+sudo rm scan.xml
+
+termux-toast "scan finished for ${IP_RANGE}"
+
+termux-open-url "file:///sdcard/Reports/${REPORT_NAME}"
+
