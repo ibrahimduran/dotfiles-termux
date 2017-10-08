@@ -1,0 +1,10 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+SSH_KEY=$(termux-dialog -i "" -m -t "add authorized key")
+
+if [ "$SSH_KEY" = "" ]; then
+	exit
+fi
+
+echo $SSH_KEY >> ~/.ssh/authorized_keys
+

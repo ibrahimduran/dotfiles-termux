@@ -1,0 +1,10 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+KEY_OWNER=$(termux-dialog -i "user@host" -t "remove authorized key")
+
+if [ "$KEY_OWNER" = "" ]; then
+	exit
+fi
+
+sed -i "/ ${KEY_OWNER}$/d" ~/.ssh/authorized_keys
+
