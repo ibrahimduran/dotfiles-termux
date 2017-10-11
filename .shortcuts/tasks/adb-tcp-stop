@@ -1,0 +1,8 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+sudo setprop service.adb.tcp.port -1
+sudo stop adbd
+sudo start adbd
+
+termux-toast "adb is now stopped"
+

@@ -1,0 +1,14 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+PORT=$(termux-dialog -i "5555" -t "adb port")
+
+if [ "$PORT" = "" ]; then
+	PORT="5555"
+fi
+
+sudo setprop service.adb.tcp.port $PORT
+sudo stop adbd
+sudo start adbd
+
+termux-toast "adb is now running on :${PORT}"
+
